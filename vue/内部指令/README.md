@@ -351,13 +351,7 @@ v-model指令，可简单的理解为绑定数据源。就是把数据绑定在�
 
 使用限制，应该用于表单控件或者组件上：
 
-- <input>
-
-- <select>
-
-- <textarea>
-
-- components
+`<input>、<select>、<textarea>、components`
 
 ```
 <!DOCTYPE html>
