@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello World!</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>v-if & v-else & v-show</h1>
+	<hr>
+	<div id="app">
+		<div v-if="isLogin == 'A'">v-if</div>
+		<div v-else-if="isLogin == 'B'">v-else-if</div>
+		<div v-else>v-else</div>
+		<div v-show="isLogin">v-show</div>
+		<hr>
+		<template v-if="isLogin == 'B'">v-if支持template元素</template>
+		<template v-show="isLogin == 'B'">v-show不支持template元素</template>>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				isLogin: 'A'
+			},
+			components: {
+	            "test-child": {
+	              template:"<h1>我是template</h1>"
+	            }
+	        }
+		})
+	</script>
+</body>
+</html>
