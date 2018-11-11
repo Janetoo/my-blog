@@ -622,6 +622,7 @@ Vue一共有10个生命周期函数，我们可以利用这些函数在vue的每
 
 这是[官网](https://cn.vuejs.org/v2/api/#template)给出的template模板标签的作用描述，感觉不是很详细，写几个例子看看它都能做什么。
 
+把template写在挂载元素外面：
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -649,7 +650,38 @@ Vue一共有10个生命周期函数，我们可以利用这些函数在vue的每
 </body>
 </html>
 ```
-打开浏览器可以看到在浏览器上并没有渲染出任何信息，这是因为template标签内容天生不可见，设置了display：none；属性：
+当把template写在挂载点外面的时候，打开浏览器可以看到在浏览器上并没有渲染出任何信息，这是因为template标签内容天生不可见，设置了display：none；属性。
+
+把template写在挂载元素里面：
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Vue模板标签templete</title>
+</head>
+<body>
+    <h1>Vue模板标签templete</h1>
+    <hr>
+    <div id="app">
+        <template>
+            <h1 style="color:red">我是Template</h1>
+        </template>
+    </div>
+
+    <script type="text/javascript">
+        var app=new Vue({
+            el:'#app',
+            data:{
+                message:'hello Vue!'
+            },
+        })
+    </script>
+</body>
+</html>
+```
+当把template写在挂载点里面的时候，打开浏览器可以看到在浏览器上渲染出了模板，并且最终的渲染结果并没有包含 <template> 元素。
 
 根据渲染结果并没有包含 <template> 元素的这个特性，它可以用来：
 
@@ -745,7 +777,7 @@ Vue一共有10个生命周期函数，我们可以利用这些函数在vue的每
 
 3. 用于制作模板，最后将写好的模板挂载到指定元素上展示内容。有四种写法：
 
-第一种：直接在构造器里的template选项后边编写。这种写法比较直观，但是如果模板html代码太多，不建议这么写。
+第一种：直接在构造器里的template选项后边编写。这种写法比较直观，但是如果模板html代码多的话，不建议这么写。
 
 ```
 <!DOCTYPE html>
@@ -779,7 +811,7 @@ Vue一共有10个生命周期函数，我们可以利用这些函数在vue的每
 
 **这里需要注意的是：模板的标识不是单引号和双引号，而是`，就是Tab上面的键。**
 
-第二种：写在template标签里的模板。
+第二种：写在template标签里的模板，并且template元素写在挂载元素外面。
 
 ```
 <!DOCTYPE html>
