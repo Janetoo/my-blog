@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>vue的生命周期</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>vue的声明周期</h1>
+    <hr>
+    <div id="app">
+         <p>{{ message }}</p>
+         <button @click="add">增加内容</button>
+    </div>
+    <br>
+    <button onclick="app.$destroy()">销毁</button>
+    <script type="text/javascript">
+        
+      var app = new Vue({
+            el: '#app',
+            data: {
+                message : "zaishuiyixia is boy" 
+            },
+            methods: {
+                alert: function () {
+                    console.log('events')
+                },
+                add:function () {
+                    this.message += '!'
+                }
+            },
+
+          //beforeCreate:刚刚创建vue实例，这个时候，数据还没有挂载，只是一个空壳 
+           beforeCreate: function () {
+               console.group('beforeCreate 创建前状态===============》');
+               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data   : " + this.$data); //undefined 
+               console.log("%c%s", "color:red","message: " + this.message) //undefined
+               console.log('beforeCreate: 刚刚new Vue()之后，这个时候，数据还没有挂载，只是一个空壳')
+               console.log('this.$methods',this.$methods) //undefined
+               // console.log(this.alert()) // 会报错 this.alert is not a function
+            },
+
+            //created:挂载数据，绑定事件(methods里面定义的事件)，这个时候已经可以使用到数据，也可以更改数据,在这里更改数据不会触发updated函数
+            created: function () {
+                console.group('created 创建完毕状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el); //undefined
+                console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 
+                console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+                console.log(this.alert()) //可以执行methods里定义的函数了 初始化事件
+                this.message = 'zaishuiyixia is a pretty handsome boy!'
+                console.log('更改数据',this.$data.message)
+                console.log('在这里可以在渲染前倒数第二次更改数据的机会，不会触发其他的钩子函数，一般可以在这里做初始数据的获取')
+                console.log('接下来开始找实例或者组件对应的模板，编译模板为虚拟dom放入到render函数中准备渲染')
+            },
+
+            //beforeMount：虚拟dom已经创建完成，马上就要渲染,在这里也可以更改数据，不会触发updated
+            beforeMount: function () {
+                console.group('beforeMount 挂载前状态===============》');
+                console.log("%c%s", "color:red","el     : " + (this.$el)); //已被初始化
+                console.log(this.$el); //el已被初始化,是虚拟dom，数据message还没有渲染上去
+                console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化  
+                console.log("%c%s", "color:red","message: " + this.message); //已被初始化  
+                this.message = 'The last change to change data!'
+                console.log('最后一次改变数据的机会', this.$data.message)
+                console.log('在这里可以在渲染前最后一次更改数据的机会，不会触发其他的钩子函数，一般可以在这里做初始数据的获取')
+                console.log('接下来开始render，渲染出真实dom')
+            },
+
+            //mounted：此时，数据、真实dom都已经处理好了,dom上的事件也都已经挂载好了
+            mounted: function () {
+                console.group('mounted 挂载结束状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el); //已被初始化
+                console.log(this.$el);    
+                console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化
+                console.log("%c%s", "color:red","message: " + this.message); //已被初始化 
+                console.log('可以在这里操作真实dom等事情...')
+            },
+
+            //beforeUpdate:重新渲染之前触发,当组件或实例的数据更改之后，会立即执行beforeUpdate
+            beforeUpdate: function () {        
+                console.group('beforeUpdate 更新前状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el);
+                console.log(this.$el);   
+                console.log("%c%s", "color:red","data   : " + this.$data); 
+                console.log("%c%s", "color:red","message: " + this.message); 
+                console.log('在这里不能更改数据，否则会陷入死循环')
+                console.log('组件或实例的数据更改之后，会立即执行beforeUpdate，然后vue的虚拟dom机制会重新构建虚拟dom并与上一次的虚拟dom树利用diff算法进行对比之后重新渲染')
+            },
+
+            //当更新完成后，执行updated，数据已经更改完成，dom也重新render完成，可以操作更新后的虚拟dom
+            updated: function () {
+                console.group('updated 更新完成状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el);
+                console.log(this.$el); 
+                console.log("%c%s", "color:red","data   : " + this.$data); 
+                console.log("%c%s", "color:red","message: " + this.message); 
+                console.log('在这里不能更改数据，否则会陷入死循环')
+                console.log('当数据更新完成后，执行updated，这时候数据已经更改完成，dom也重新render完成，可以操作更新后的真实dom')
+            },
+
+            //beforeDestory:销毁前执行（$destroy方法被调用的时候就会执行）,一般在这里做善后处理:清除计时器、清除非指令绑定的事件等等...
+            beforeDestroy: function () {
+                console.group('beforeDestroy 销毁前状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el);
+                console.log(this.$el);    
+                console.log("%c%s", "color:red","data   : " + this.$data); 
+                console.log("%c%s", "color:red","message: " + this.message); 
+                console.log('beforeDestory:组件或实例销毁前执行（$destroy方法被调用的时候就会立刻执行）,一般在这里做善后处理:清除计时器、清除非指令绑定的事件等等...')
+            },
+
+            //destroyed:组件的数据绑定、监听...都去掉了,只剩下dom空壳，这里也可以用来做善后处理
+            destroyed: function () {
+                console.group('destroyed 销毁完成状态===============》');
+                console.log("%c%s", "color:red","el     : " + this.$el);
+                console.log(this.$el);  
+                console.log("%c%s", "color:red","data   : " + this.$data); 
+                console.log("%c%s", "color:red","message: " + this.message)
+                console.log('在组件或实例销毁后执行，这是已经解除了组件的数据绑定、指令绑定的事件监听...去掉后只剩下dom空壳，在这里做善后工作也可以')
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>component-2 props 组件属性</title>
+</head>
+<body>
+    <h1>component-2 props 组件属性</h1>
+    <hr>
+    <div id="app">
+        <date week="Monday"></date>
+        <br>
+        <helloworld :here="message"></helloworld>
+    </div>
+
+    <script type="text/javascript">
+        
+        var helloworld = { 
+            template: `<div>My here is {{here}}!</div>`,
+            props: ['here']
+        }
+
+        var date = {
+            template: `<div>Today is {{week}}!</div>`,
+            props: ['week']
+        }
+    
+        var app=new Vue({
+            el:'#app',
+            data:{
+                message:'GuangZhou'
+            },
+            components:{
+                "helloworld": helloworld,
+                "date": date
+            }
+        })
+    </script>
+</body>
+</html>

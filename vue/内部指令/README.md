@@ -529,7 +529,7 @@ var app=new Vue({
 ```
 **v-cloak指令：**
 
-在vue渲染完指定的整个DOM后才进行显示。
+在vue渲染完指定的整个DOM后才进行显示。可以防止数据抖动。
 ```
 <div v-cloak>
   {{ message }}

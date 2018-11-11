@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Vue.set 全局api</title>
+</head>
+<body>
+    <h1>Vue.set 全局api</h1>
+    <hr>
+    <div id="app">
+        <ul>
+            <li v-for=" aa in arr">{{aa}}</li>
+        </ul>
+        <button onclick="add()">外部添加</button>
+        <br/>
+        <hr>
+         <p v-for="item in items" :key="item.id">
+            {{item.message}}
+        </p>
+        <!--@click等价于v-on:click-->
+        <button class="btn" @click="btn1Click()">点我试试</button>
+        <br/>
+        <br/>
+		<button class="btn" @click="btn2Click()">动态赋值</button>
+        <br/>
+        <br/>
+        <button class="btn" @click="btn3Click()">为data新增属性</button>
+        <br/>
+        <br/>
+        <button class="btn" @click="btn4Click()">通过数组下表修改数据</button>
+    </div>
+    <script type="text/javascript">
+        function add(){
+            console.log("我已经执行了");
+            app.arr[1]='ddd';
+            //Vue.set(app.arr,1,'ddd');
+        }
+
+        var outData={
+            arr:['aaa','bbb','ccc'],
+            items:[
+                {message:"Test one",id:"1"},
+                {message:"Test two",id:"2"},
+                {message:"Test three",id:"3"}
+            ]
+        };
+
+        var app=new Vue({
+            el:'#app',
+            data:outData,
+            methods:{
+                btn1Click:function(){
+                    //为data中的items动态新增一条数据
+                    this.items.push({message:"动态新增"});
+                    console.log('btn1Click', this.items)
+                },
+                btn2Click:function(){
+	                //Vue methods中的this 指向的是Vue的实例，这里可以直接在this中找到items
+	                Vue.set(this.items,0,{message:"Change Test",id:'10'});
+	                console.log('btn2Click', this.items)
+	            },
+                btn3Click:function(){
+                    var itemLen=this.items.length;
+                    Vue.set(this.items,itemLen,{message:"Test add attr",id:itemLen});
+                    console.log('btn3Click', this.items)
+                },
+                btn4Click:function(){
+				    this.items[0]={message:"Change Test",id:'10'},
+				    console.log('btn4Click', this.items)
+				}
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue.directive 自定义指令</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>Vue.directive 自定义指令</h1>
+	<hr>
+	<div id="app">
+		<div v-change="color">{{num}}</div>
+		<p><button @click="add">ADD</button></p>
+		<hr>
+		<p><button click="unbind">解绑</button></p>
+	</div>
+
+	<script type="text/javascript">
+		function unbind() {
+			app.$destory();
+		}
+		//简写，如果在 bind 和 update 时触发相同行为，而不关心其它的钩子，可以简写成这种形式
+		// Vue.directive('change', function(el, binding, vnode, oldVnode) {
+		// 	console.log('el', el)
+		// 	console.log('binding', binding)
+		// 	console.log('binding.lue', binding.value)
+		// 	console.log('binding.name', binding.name)
+		// 	console.log('binding.expression', binding.expression)
+		// 	console.log('vnode', vnode)
+
+		// 	el.style="color:"+binding.value
+		// })
+
+		//使用声明周期钩子：
+		Vue.directive("change", {
+			bind:function(el, binding) {//被绑定
+				console.log('1 - bind')
+
+				el.style="color:"+binding.value
+			},
+			inserted: function() {//绑定到节点
+				console.log('2 - inserted')
+			},
+			update:function(){//组件更新
+			    console.log('3 - update');
+			},
+			componentUpdated:function(){//组件更新完成
+			    console.log('4 - componentUpdated');
+			},
+			unbind:function(){//解绑
+			    console.log('5 - unbind');
+			}
+		})
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				num: 10,
+				color: 'red'
+			},
+			methods: {
+				add: function() {
+					this.num++
+				}
+			}
+		})
+	</script>
+</body>
+</html>
