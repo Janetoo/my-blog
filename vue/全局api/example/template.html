@@ -10,8 +10,14 @@
     <hr>
     <div id="app">我是挂载的内容</div>
 
+    <!--template 标签模板 -->
+    <template id="demo2">
+        <h1 style="color:red">我是Template</h1>
+    </template>
+
+    <!--script标签模板-->
     <script type="x-template" id="demo3">
-        <h2 style="color:red">我是script标签模板</h2>
+        <h1 style="color:red">我是script标签模板</h1>
     </script>
 
     <script type="text/javascript">
@@ -20,7 +26,8 @@
              data:{
                  message:'hello Vue!'
               },
-             template:'#demo3'
+             template:'#demo3',
+             //template:`   <h1 style="color:red">我是选项模板</h1>`
         })
     </script>
 </body>

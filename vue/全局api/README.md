@@ -117,6 +117,27 @@ unbind:function(){//解绑
 
 Vue.extend 返回的是一个“扩展实例构造器”,也就是预设了部分选项的Vue实例构造器。经常服务于Vue.component用来生成组件，可以简单理解为当在模板中遇到该组件名称作为标签的自定义元素时，会自动调用“扩展实例构造器”来生产组件实例，并挂载到自定义元素上。
 
+Vue 的构造函数可接收的大部分选项都能在 Vue.extend() 中使用，不过也有两个特例：data 和 el。由于每个 Vue 的实例都应该有自己的 `$data` 和` $el`，我们显然不希望传递给 Vue.extend() 的值被所有通过这个构造函数创建的实例所共享。因此如果要定义组件初始化默认数据和元素的方式，应该传入一个函数：
+
+搭配Vue.component使用：
+```
+// 扩展 Vue 得到一个可复用的构造函数
+var MyComponent = Vue.extend({
+  template: '<p>{{title}}  a custom component!</p>',
+  data: function () {
+    return {
+      title: 'Hello!'
+    }
+  }
+})
+```
+
+接下来，就可以用 Vue.component() 来注册这个构造函数：
+```
+// 注册组件，传入扩展构造器
+Vue.component('my-component', MyComponent)
+```
+
 扩展实例demo：
 ```
 //Vue.extend 返回的是一个“扩展实例构造器”，也就是一个预设了部分选项的 Vue 实例构造器
