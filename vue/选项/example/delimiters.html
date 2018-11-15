@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>delimiters Option</title>
+</head>
+<body>
+    <h1>delimiters Option</h1>
+    <hr>
+    <div id="app">
+        <ul>
+            <li v-for=" aa in arr">${aa}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+
+        var outData={
+            arr:['aaa','bbb','ccc'],
+        };
+
+        var app=new Vue({
+            delimiters: ['${', '}'],
+            el: '#app',
+            data: outData
+        })
+    </script>
+</body>
+</html>

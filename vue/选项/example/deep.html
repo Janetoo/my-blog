@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>watch Option</title>
+</head>
+<body>
+    <h1>watch Option</h1>
+    <hr>
+    <div id="app">
+        <p>今日温度：{{obj.temperature}}°C</p>
+        <p>穿衣建议:{{obj.suggestion}}</p>
+        <p>
+            <button @click="add">添加温度</button>
+            <button @click="reduce">减少温度</button>
+        </p>
+    </div>
+
+    <script type="text/javascript">
+        var suggestion=['T恤短袖','夹克长裙','棉衣羽绒服'];
+        var app=new Vue({
+            el:'#app',
+            data: {
+                obj: {
+                    temperature: 14,
+                    suggestion:'T恤短袖'
+                }
+            },
+            methods:{
+                add:function(){
+                    this.obj.temperature+=5;
+                },
+                reduce:function(){
+                    this.obj.temperature-=5;
+                }
+            },
+            // watch: {
+            //     obj: {
+            //         handler(newVal, oldVal) {
+            //             console.log('obj.a changed', newVal.temperature)
+            //             if(newVal.temperature>=26){
+            //                 this.obj.suggestion=suggestion[0];
+            //             }else if(newVal.temperature<26 && newVal.temperature >=0)
+            //             {
+            //                 this.obj.suggestion=suggestion[1];
+            //             }else{
+            //                 this.obj.suggestion=suggestion[2];
+            //             }
+            //             console.log('obj.a 2', newVal.suggestion)
+            //         },
+            //         immediate: true,
+            //         deep: true
+            //     }
+            // }
+
+            //优化使用字符串形式监听
+            watch: {
+                'obj.temperature': {
+                    handler(newVal, oldVal) {
+                        console.log('obj.a changed', newVal)
+                        if(newVal>=26){
+                            this.obj.suggestion=suggestion[0];
+                        }else if(newVal<26 && newVal >=0)
+                        {
+                            this.obj.suggestion=suggestion[1];
+                        }else{
+                            this.obj.suggestion=suggestion[2];
+                        }
+                        console.log('obj.a 2', this.obj.suggestion)
+                    },
+                    immediate: true,
+                    deep: true
+                }
+            } 
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Extends Optin</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>Extends Optin Demo</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+        <p><button @click="add">add</button></p>
+    </div>
+    <script type="text/javascript">
+        var bbb={
+            created () {
+                console.log("我是扩展出来的钩子函数");
+            },
+            methods:{
+                add () {
+                    console.log('我是被扩展出来的方法！');
+                }
+            }
+        };
+
+        var app=new Vue({
+            el:'#app',
+            data:{
+                message:'hello Vue!'
+            },
+            methods:{
+                add () {
+                    console.log('我是原生方法');
+                }
+            },
+            created () {
+                console.log("我是原生的钩子函数");
+            },
+            extends:bbb
+        })
+    </script>
+</body>
+</html>

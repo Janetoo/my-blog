@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>Mixins Option</title>
+</head>
+<body>
+    <h1>Mixins Option</h1>
+    <hr>
+    <div id="app">
+        <p>num: {{ num }}</p>
+        <P><button @click="add">增加数量</button></P>
+    </div>
+    <script type="text/javascript">
+        //全局混入
+        Vue.mixin({
+            created () {
+                console.log('我是全局混入');
+            }
+        })
+
+        //额外临时加入，用于显示日志
+        var addLog={
+            data: function () {
+                return {
+                    message: 'hello',
+                    foo: 'abc'
+                }
+            },
+            updated () {
+                console.log("数据放生变化,变化成"+this.num+".");
+            },
+            created () {
+                console.log('混入对象的钩子被调用==>', this.$data)
+            }
+        }
+
+        var app=new Vue({
+            el:'#app',
+            data:{
+                num:1,
+                message: 'goodbye',
+                bar: 'def'
+            },
+            methods:{
+                add:function(){
+                    this.num++;
+                }
+            },
+            created () {
+                console.log('实例钩子被调用==>', this.$data)
+            },
+            //混入
+            mixins:[addLog]
+        })
+    </script>
+</body>
+</html>

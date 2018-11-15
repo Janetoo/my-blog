@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>methods Option</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>methods Option</h1>
+    <hr>
+    <div id="app">
+       {{a}}
+       <p><button @click="add(2, '每次加2', $event)">add</button></p>
+       <p><btn @click.native="add(3, '每次加3', $event)"></btn></p>
+    </div>
+    <button onclick="app.add(4, '每次加4')">外部访问构造器里的方法</button>
+
+    <script type="text/javascript">
+       var btn={
+           template:'<button>外部组件</button>'
+       }
+        var app=new Vue({
+            el:'#app',
+            data:{
+                a:1
+            },
+            methods:{
+                add (num, msg, event) {
+                    console.log('num==>', num)
+                    console.log('msg==>', msg)
+                    console.log('event==>', event)
+                    this.a += num
+                }
+            },
+            components:{
+                "btn":btn
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue.extend 扩展实例构造器</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>Vue.extend 扩展实例构造器</h1>
+	<hr>
+	<div id="author"></div>
+
+	<script type="text/javascript">
+		//Vue.extend 返回的是一个“扩展实例构造器”，也就是一个预设了部分选项的 Vue 实例构造器
+		var authorExtend = Vue.extend({
+			template: "<p><a :href='authorUrl'>{{authorName}}</a></p>",
+			data: function() {
+				return {
+					authorName: 'zaishuiyixia',
+					authorUrl: 'https://www.jianshu.com/u/6d5f3f6492f8'
+				}
+			}
+		});
+
+		//调用 new authorExtend 构造函数来生成组件实例，并挂载到元素上
+		new authorExtend().$mount('#author');
+
+		//调用 new authorExtend 构造函数来生成组件实例，并挂载到元素上
+		// var vm = new authorExtend({
+		// 	el: '#author'
+		// })
+	</script>
+</body>
+</html>
