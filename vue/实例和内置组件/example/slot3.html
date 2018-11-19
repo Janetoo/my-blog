@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>作用域插槽</title>
+    <style>
+        .father {
+            background: #ccc;
+        }
+        .child {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>作用域插槽</h1>
+    <hr>
+    <div id="app">
+        <father></father>
+    </div>
+
+    <template id="tmp">
+        <div class="father">
+            <h3>这里是父组件</h3>
+            <!--第一次使用：用flex展示数据-->
+            <child>
+                <template slot-scope="user">
+                    <div class="tmpl">
+                        <span v-for="item in user.data">{{item + '、'}}</span>
+                    </div>
+                </template>
+            </child>
+
+            <!--第二次使用：用列表展示数据-->
+            <child>
+              <template slot-scope="user">
+                <ul>
+                  <li v-for="item in user.data">{{item}}</li>
+                </ul>
+              </template>
+            </child>
+
+            <!--第三次使用：直接显示数据-->
+            <child>
+                <template slot-scope="user">
+                    {{user.data}}
+                </template>
+
+            </child>
+
+            <!--第四次使用：不使用其提供的数据, 作用域插槽退变成匿名插槽-->
+            <child>
+                我就是模板
+            </child>
+        </div>
+    </template>
+
+    <template id="tmp2">
+        <div class="child">
+
+            <h3>这里是子组件</h3>
+            <!--作用域插槽-->
+            <slot  :data="data"></slot>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        var child = {
+            template: '#tmp2',
+            data: function(){
+                return {
+                    data: ['zhangsan','lisi','wanwu','zhaoliu','tianqi','xiaoba']
+                }
+            }
+        }
+
+        var father = {
+            template:'#tmp',
+            components: {
+                "child": child
+            }
+        }
+
+        var app=new Vue({
+            el:'#app',
+            data:{
+               
+            },
+            components:{
+                "father": father
+            }
+        })
+    </script>
+</body>
+</html>

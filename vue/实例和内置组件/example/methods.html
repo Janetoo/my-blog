@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>实例方法</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>实例方法</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+        <br>    
+    </div>
+    <p><button onclick="destroy()">銷毀实例</button></p>   
+    <p><button onclick="forceUpdate()">强制实例重新渲染</button></p>
+    <p><button onclick="tick()">更新数据</button></p>
+    <script type="text/javascript">
+        var app = Vue.extend({
+            template:`<p>{{message}}</p>`,
+            data:function(){
+                return {
+                    message:'Hello ,I am zaishuiyixia!'
+                }
+            },
+            beforeUpdate() {
+                console.log('准备更新数据')
+            },
+            updated() {
+                console.log('更新完成')
+            },
+            destroyed() {
+                console.log('实例已被销毁。')
+            }
+        })
+        var vm = new app().$mount("#app");
+
+        function destroy(){
+           vm.$destroy();
+        }
+
+        function forceUpdate(){
+           vm.$forceUpdate();
+        }
+
+        function tick(){
+            vm.message="update message info ";
+            vm.$nextTick(function(){
+                console.log('message更新完后我被调用了');
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <title>默认插槽 | 匿名插槽</title>
+    <style>
+        .father {
+            background: #ccc;
+        }
+        .child {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>默认插槽 | 匿名插槽</h1>
+    <hr>
+    <div id="app">
+        <father></father>
+    </div>
+
+    <template id="tmp">
+        <div class="father">
+            <h3>这里是父组件</h3>
+            <child>
+                <div class="tmpl">
+                  <span>菜单1</span>
+                  <span>菜单2</span>
+                  <span>菜单3</span>
+                  <span>菜单4</span>
+                  <span>菜单5</span>
+                  <span>菜单6</span>
+                </div>
+            </child>
+        </div>
+    </template>
+
+    <template id="tmp2">
+        <div class="child">
+            <h3>这里是子组件</h3>
+            <slot></slot>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        var child = {
+            template: '#tmp2'
+        }
+
+        var father = {
+            template:'#tmp',
+            components: {
+                "child": child
+            }
+        }
+
+        var app=new Vue({
+            el:'#app',
+            data:{
+               
+            },
+            components:{
+                "father": father
+            }
+        })
+    </script>
+</body>
+</html>
